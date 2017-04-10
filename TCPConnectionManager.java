@@ -1,5 +1,4 @@
 
-
 import java.io.ByteArrayOutputStream;
 
 import java.io.DataInputStream;
@@ -25,7 +24,8 @@ import java.util.HashMap;
  */
 public class TCPConnectionManager {
 
-//	private static Logger logger = Logger.getLogger(TCPConnectionManager.class);
+	// private static Logger logger =
+	// Logger.getLogger(TCPConnectionManager.class);
 
 	/** This is the map for P2pConnections. Input is the peerID of a peer. */
 
@@ -96,7 +96,7 @@ public class TCPConnectionManager {
 	private void populatePeerAddressToPeerIDHashMap() {
 		peerList = utilInstance.getPeerList();
 		for (PeerInfo peer : peerList) {
-			peerAddressToPeerIDMap.put(Util.getPeerAddress(peer), peer.getPeerID());
+			peerAddressToPeerIDMap.put(peer.getHostName(), peer.getPeerID());
 		}
 	}
 
@@ -186,8 +186,20 @@ public class TCPConnectionManager {
 						localPeerClientSocket = new Socket(remotePeerServer.getHostName(),
 								remotePeerServer.getPortNumber());
 
-//						logger.info(Util.dateFormat.format(new Date()) + ": Peer " + localPeerID
-//								+ " makes a connection to Peer " + remotePeerServer.getPeerID() + ".");
+						// logger.info(Util.dateFormat.format(new Date()) + ":
+						// Peer " + localPeerID
+						// + " makes a connection to Peer " +
+						// remotePeerServer.getPeerID() + ".");
+
+						if (!localPeerClientSocket.isConnected()) {
+							System.err.println("\nNot connected!\n");
+
+						}
+
+						if (!localPeerClientSocket.isBound()) {
+							System.err.println("\nNot Bound!\n");
+
+						}
 
 						System.out.println(Util.dateFormat.format(new Date()) + ": Peer " + localPeerID
 								+ " makes a connection to Peer " + remotePeerServer.getPeerID() + ".");
@@ -195,7 +207,7 @@ public class TCPConnectionManager {
 						populateConnMap(localPeerID, localPeerClientSocket, remotePeerServer.getPeerID(),
 								remotePeerServer.getHostName(), remotePeerServer.getPortNumber());
 
-						peerAddressToPeerIDMap.put(localHostname + ":" + localPeerClientSocket.getLocalPort(),
+						peerAddressToPeerIDMap.put(localHostname,
 								localPeerID);
 
 						// System.out.println("Mapping for "+localHostname + ":"
@@ -373,7 +385,7 @@ public class TCPConnectionManager {
 
 			this.localPeerSocket = connection;
 			String clientHostname = connection.getInetAddress().getHostName();
-			while (!peerAddressToPeerIDMap.containsKey(clientHostname + ":" + connection.getPort())) {
+			while (!peerAddressToPeerIDMap.containsKey(clientHostname)) {
 				// System.err.println("\nWait for the local server peer# " +
 				// localServerPeerID
 				// + ", peerAddressToPeerIDMap to have a mapping for the host# "
@@ -386,12 +398,13 @@ public class TCPConnectionManager {
 					e.printStackTrace();
 				}
 			}
-			remoteClientPeerID = peerAddressToPeerIDMap.get(clientHostname + ":" + connection.getPort());
+			remoteClientPeerID = peerAddressToPeerIDMap.get(clientHostname);
 
 			// log the connection: [Time]: Peer [peer_ID 1] is connected from
 			// Peer [peer_ID 2].
-//			logger.info(Util.dateFormat.format(new Date()) + ": Peer " + localServerPeerID + " is connected from Peer "
-//					+ remoteClientPeerID + ".");
+			// logger.info(Util.dateFormat.format(new Date()) + ": Peer " +
+			// localServerPeerID + " is connected from Peer "
+			// + remoteClientPeerID + ".");
 
 			System.out.println(Util.dateFormat.format(new Date()) + ": Peer " + localServerPeerID
 					+ " is connected from Peer " + remoteClientPeerID + ".");

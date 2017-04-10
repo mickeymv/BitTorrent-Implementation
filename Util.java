@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Random;
 import java.io.File;
 
-
 /**
  * @author Mickey Vellukunnel, Xiaolong Li, Arpitha
  *
@@ -379,7 +378,7 @@ public class Util {
 	 */
 	public static String getPieceFileName(String localPeerID, int pieceNum) {
 
-		return "project/peer_" + localPeerID + "/_piece_" + pieceNum; // File.separator
+		return PEER_DIRECTORY_PREFIX + localPeerID + "/" + PIECE_PREFIX + pieceNum; // File.separator
 	}
 
 	/**
