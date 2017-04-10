@@ -641,7 +641,7 @@ public class PeerProcess {
 		}
 		PeerProcess localPeer = new PeerProcess(args[0]);
 		// start logging
-		//new FileLogger().initialize(args[0]);
+		new FileLogger().initialize(args[0]);
 		localPeer.initiatePeerProcess();
 	}
 

@@ -17,22 +17,17 @@ public class FileLogger {
 		// Logger logger = Logger.getLogger(FileLogger.class);
 		try {
 
-			File logFileDirectory = new File("project/");
-			if (!logFileDirectory.exists())
-				logFileDirectory.mkdirs();
-
 			// Date date = new Date();
 			// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd.h-mm.a");
 			// String formattedDate = sdf.format(date);
 
 			String filename = "log_peer_" + localPeerID + ".log";
 
-			File logFile = new File(logFileDirectory, filename);
+			File logFile = new File(filename);
 
 			logFile.setWritable(true);
 
 			if (!logFile.exists()) {
-				logFile.getParentFile().mkdirs();
 				try {
 					// System.out.println("create file: " +
 					// logFile.getAbsolutePath());
