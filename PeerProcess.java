@@ -410,6 +410,8 @@ public class PeerProcess {
 			speed_list.add(new peer_speed_pair(key, download_speed.get(key)));
 		}
 
+		Collections.shuffle(speed_list); //return shuffled list of peers.
+
 		Collections.sort(speed_list, Collections.reverseOrder());
 
 		boolean noOneInterested = true;
