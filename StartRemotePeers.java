@@ -16,16 +16,14 @@ import com.jcraft.jsch.Session;
  *
  * @author Mickey Vellukunnel
  * 
- *         Starts remote peers specified one by one. 
- *         example > java PeerProcess 1001
+ * Starts remote peers specified one by one. 
+ * example > java PeerProcess 1001
  *
  */
 
 public class StartRemotePeers {
 
-	// private static final String peerProcessCommandName = "java PeerProcess";
-	// private static final String projectFolderNameOnRemote = "compNetworks";
-	private static final String scriptPrefix = "cd compNetworks; java PeerProcess ";
+	private static final String scriptPrefix = "cd BitTorrentProject; java PeerProcess ";
 
 	public static class PeerInfo {
 
@@ -58,8 +56,6 @@ public class StartRemotePeers {
 
 	public static void main(String[] args) {
 
-		// String workingDir = projectFolderNameOnRemote;
-
 		ArrayList<PeerInfo> peerList = new ArrayList<>();
 
 		String ciseUser = "mvelluku"; // change with your CISE username
@@ -78,6 +74,12 @@ public class StartRemotePeers {
 		for (PeerInfo remotePeer : peerList) {
 			try {
 				JSch jsch = new JSch();
+				/*
+				 * Give the path to your private key. Make sure your public key
+				 * is already within your remote CISE machine to ssh into it
+				 * without a password. Or you can use the corressponding method
+				 * of JSch which accepts a password.
+				 */
 				jsch.addIdentity("/Users/mickey/.ssh/id_rsa", "");
 				Session session = jsch.getSession(ciseUser, remotePeer.getHostName(), 22);
 				Properties config = new Properties();
